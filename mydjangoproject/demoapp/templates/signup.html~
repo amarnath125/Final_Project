@@ -15,10 +15,11 @@
 		<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
 
 	</head>
-	<body>
-	<h1>Instagram Clone</h1>
 	
-	<div style = "float:center">
+	<body>
+	<h1 align = center>Instagram Clone</h1>
+	
+	<div align =center>
 	<form action ="" method ="get">
 	
 	<table>	
@@ -40,7 +41,7 @@
 	</tr>
 	<tr>
 		<td></td>
-		<td><input type="submit" value="Login"/>
+		<td><input type="submit" value="SignIn"/>
 			<input type="reset"  value="Reset"/>
 		</td>	
 	</tr>
