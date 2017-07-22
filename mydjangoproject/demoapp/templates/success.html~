@@ -7,6 +7,6 @@
 	</head>
 	<body>
 	<h1> User registeration succesful. Go for Login</h1>
-	<a href="/login/">Login</a>
+	<a href="/login">Login</a>
 	</body>
 </html>

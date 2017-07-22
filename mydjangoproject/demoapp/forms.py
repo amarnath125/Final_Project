@@ -11,3 +11,4 @@ class LoginForm(forms.ModelForm):
         model = UserModel
         fields = ['username','password']
 
+
