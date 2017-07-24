@@ -1,5 +1,5 @@
 from django import forms
-from models import UserModel
+from models import UserModel,PostModel
 
 class SignUpForm(forms.ModelForm):
     class Meta:
@@ -8,7 +8,12 @@ class SignUpForm(forms.ModelForm):
 
 class LoginForm(forms.ModelForm):
     class Meta:
-        model = UserModel
+        model  = UserModel
         fields = ['username','password']
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model  = PostModel
+        fields = ['image','caption']
 
 

@@ -20,8 +20,9 @@
 	<h1 align = center>Instagram Clone</h1>
 	
 	<div align =center>
-	<form action ="" method ="post">
+	<form action ="" method ="post" enctype="multipart/form-data">
 	{% csrf_token %}
+	
 	<table>	
 	<tr>
 		<td>Email </td>
@@ -33,7 +34,7 @@
 	</tr>
 	<tr>
 		<td>Username</td>
-		<td> <input type="text" name="username" placeholder="username" value="{{username}}"> </td>
+		<td> <input type="text" name="username" placeholder="username" value="{{ username }}"> </td>
 	</tr>
 	<tr>
 		<td>Password </td>
@@ -50,11 +51,9 @@
 	</form>
 	</div>
 	
-	
 	<div id="footer">
 		<h3> Copyright &copy InstagramClone</h3>
 	</div>
-	
 	
 		<!--javascript files-->
 		<!--jquery library-->

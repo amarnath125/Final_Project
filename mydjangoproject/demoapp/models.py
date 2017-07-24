@@ -19,12 +19,24 @@ class SessionToken(models.Model):
     session_token = models.CharField(max_length=255)
     created_on    = models.DateTimeField(auto_now_add=True)
     is_valid      = models.BooleanField(default=True)
-    
+
     def create_token(self):
         self.session_token = uuid.uuid4()
         
-        
+
+#post
+class PostModel(models.Model):
+    user       = models.ForeignKey(UserModel)
+    image      = models.FileField(upload_to='user_images')
+    image_url  = models.CharField(max_length=255)
+    caption    = models.CharField(max_length=240)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+
 """ 
+#just checking data from tabel UserModel
+
 get=UserModel.objects.all()
 lget=len(get)
 x=1
