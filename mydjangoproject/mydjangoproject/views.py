@@ -9,6 +9,7 @@ from mydjangoproject.settings import BASE_DIR
 
 
 # Create your views here.
+
 def check_user(request):
     if request.COOKIES.get("session_token"):
         session = SessionToken.objects.filter(session_token = request.COOKIES.get('session_token')).first()
@@ -16,6 +17,14 @@ def check_user(request):
             return session.user
         else:
             return None
+
+
+
+def logout_view(request):
+    user_id = check_user(request)
+    delete_user = SessionToken.objects.filter(user = user_id)
+    delete_user.delete()
+    return redirect('/signup/')
 
 
 
@@ -32,11 +41,11 @@ def feed_view(request):
             image   = form.cleaned_data.get('image')
             caption = form.cleaned_data.get('caption')
             post    = PostModel(user=user, image=image, caption=caption)
-            client  = ImgurClient('a6ef522b68f01a9', '7d31b3b76ad618f8e97f8951ed87b25b5f87572b')
-            path=str(BASE_DIR + post.image.url)
-            post.image_url = client.upload_from_path(path, anon=True)['http://imgur.com/upload']
+            client  = ImgurClient('a6ef522b68f01a9','7d31b3b76ad618f8e97f8951ed87b25b5f87572b')
+            path    = str(BASE_DIR) + str(post.image)
+            post.image_url = client.upload_from_path(path,anon=True)['https://api.imgur.com/3/image/']
             post.save()
-
+            return redirect('/feed/')
 
 
 
@@ -79,6 +88,7 @@ def signup_view(request):
         signup_form = SignUpForm()                             # calling & display signup form
         template_name = 'signup.html'                          # rendering to signup.html after get reqst
 
+
     elif request.method == 'POST':
         signup_form = SignUpForm(request.POST)                 # calling & process the form data
         if signup_form.is_valid():                             # validate the form data
@@ -89,4 +99,9 @@ def signup_view(request):
             new_user = UserModel(name=name, email=email, password=make_password(password), username=username)
             new_user.save()                                    # save data to db
             template_name = 'success.html'                     # rendering to success.html after post req
+        else:
+            dict={"key":"Pleas fill the form"}
+            return render(request,'signup.html',dict)
+
+
     return render(request,template_name, {'signup_form': signup_form})
