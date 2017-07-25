@@ -41,11 +41,14 @@ def feed_view(request):
             image   = form.cleaned_data.get('image')
             caption = form.cleaned_data.get('caption')
             post    = PostModel(user=user, image=image, caption=caption)
-            post.save()
+            post.save()                     #saving image, caption
             client  = ImgurClient('a6ef522b68f01a9','7d31b3b76ad618f8e97f8951ed87b25b5f87572b')
-            path    = str(BASE_DIR) + str(post.image)
+            path    = str(BASE_DIR) + '\\' + str(post.image)
             post.image_url = client.upload_from_path(path,anon=True)['link']
-            #post.save()
+            post.save()                     #saving url
+            #print post.image_url
+            #print post.image
+            return redirect('/feed/')
 
 
 

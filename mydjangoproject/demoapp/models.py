@@ -27,7 +27,7 @@ class SessionToken(models.Model):
 #post
 class PostModel(models.Model):
     user       = models.ForeignKey(UserModel)
-    image      = models.FileField(upload_to='user_images')
+    image      = models.FileField(upload_to='')
     image_url  = models.CharField(max_length=255)
     caption    = models.CharField(max_length=240)
     created_on = models.DateTimeField(auto_now_add=True)
