@@ -6,20 +6,26 @@
 
 		<meta charset="utf-8">
    		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    		<meta name="viewport" content="width=device-width, initial-scale=1">	
+   		<meta name="viewport" content="width=device-width, initial-scale=1">	
 
-		<!--Custom css file-->
-		<link rel="stylesheet" type="text/css" href="style.css" >
+		<style>
+			body
+			{	
+				background: url('https://goo.gl/n3ujSZ');
+				background-size: cover;
+				color:grey;
+				font-family:helvetica;
+			}
+		</style>
 		
-		<!--Bootstrap File-->
-		<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
-
 	</head>
 	
 	<body>
+	
 	<h1 align = center>Instagram Clone</h1>
 	
-	<div align =center>
+	<div align = center>
+	
 	<form action ="" method ="POST">
 	{% csrf_token %}
 	<table>	
@@ -40,6 +46,7 @@
 	</table>	
 	
 	</form>
+	
 	</div>
 	
 	
@@ -47,11 +54,6 @@
 		<h3> Copyright &copy InstagramClone</h3>
 	</div>
 	
-	
-		<!--javascript files-->
-		<!--jquery library-->
-		<script src="js/jquery-3.2.1.js"></script>
-		<!--bootstrap javascript-->
-		<script src="js/bootstrap.js"></script>
 	</body>
 
+</html>

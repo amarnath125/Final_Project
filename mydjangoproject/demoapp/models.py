@@ -22,27 +22,36 @@ class SessionToken(models.Model):
 
     def create_token(self):
         self.session_token = uuid.uuid4()
-        
 
 #post
 class PostModel(models.Model):
     user       = models.ForeignKey(UserModel)
-    image      = models.FileField(upload_to='')
+    image      = models.FileField(upload_to='user_images')
     image_url  = models.CharField(max_length=255)
     caption    = models.CharField(max_length=240)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+    has_liked  = models.BooleanField(default=False)
+
+    @property
+    def check_lokes(self):
+        return len(LikeModel.objects.filter(post=self))
+
+    @property
+    def comments(self):
+        return CommentModel.objects.filter(post=self).order_by('created_on')
 
 
-""" 
-#just checking data from tabel UserModel
+class LikeModel(models.Model):
+    user = models.ForeignKey(UserModel)
+    post = models.ForeignKey(PostModel)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
 
-get=UserModel.objects.all()
-lget=len(get)
-x=1
-while x<=lget:
-    get = UserModel.objects.get(id=x)
-    print get.username
-    x+=1
-"""
 
+class CommentModel(models.Model):
+	user = models.ForeignKey(UserModel)
+	post = models.ForeignKey(PostModel)
+	comment_text = models.CharField(max_length=500)
+	created_on = models.DateTimeField(auto_now_add=True)
+	updated_on = models.DateTimeField(auto_now=True)

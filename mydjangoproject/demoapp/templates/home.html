@@ -1,0 +1,55 @@
+<html>
+
+<body>
+<div align=right>
+	<a href="/feed/"> <input type = "submit" value = "upload-post"></a>
+</div>	
+
+<div>
+	
+	{% for post in posts %}
+	<h3>
+		Posted by : {{ post.user.username}}
+	</h3>
+	Image<img src="{{ post.image_url}}"
+	<span>
+	Caption: {{ post.caption }}
+	</span>
+
+	<form action "/like/" method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="post" value="{{ post.id }}">
+		{% if post.has_liked %}
+		<input type="submit" value="Unlike">
+		{% else %}
+		<input type="submit" value="Like">
+		{% endif %}
+	</form>
+	<div>
+		<h2> Likes : {{ post.check_likes }}</h2>
+	</div>
+	
+	
+</div>
+
+	<div>
+            <form method="POST" action="/comment/">
+                {% csrf_token %}
+                <input type="hidden" name="post" value="{{ post.id }}" />
+                <input type="text" name="comment_text" id="comment_text" placeholder="Make a comment.." value="{{ comment_text }}">
+                {{ comment_text }}
+                <input type="submit" class="btn-default btn" value="Comment">
+            </form>
+    </div>
+
+		<div>
+			{% for comment in post.comments %}
+			 <p><b>[{{ comment.user.username }}] [{{ comment.created_on }}]</b> [{{ comment.comment_text }}]</p>
+			 {% endfor %}
+		</div>
+		
+{% endfor %}
+	
+	
+</body>
+</html>
