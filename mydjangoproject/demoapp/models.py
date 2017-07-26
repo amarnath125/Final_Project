@@ -34,7 +34,7 @@ class PostModel(models.Model):
     has_liked  = models.BooleanField(default=False)
 
     @property
-    def check_lokes(self):
+    def check_likes(self):
         return len(LikeModel.objects.filter(post=self))
 
     @property

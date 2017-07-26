@@ -1,20 +1,58 @@
 <html>
+<head>
+<style>
+		body
+		{
+			background: url("https://goo.gl/AW5Yzp");
+			background-size: cover;	
+		}
+		#upload
+		{
+			float:left;
+			height:50px;
+			width:180px;
+		}
+		#logout
+		{
+			float:right;
+			height:50px;
+			width:180px;
+		}
+		#Like
+		{
+			height:30px;
+			width:60px;
+		}
+		#caption
+		{
+			text-color:red;
+			font-size:20px;
+		}
+</style>
+</head>
 
 <body>
-<div align=right>
-	<a href="/feed/"> <input type = "submit" value = "upload-post"></a>
-</div>	
 
-<div>
-	
+	<a href="/feed/">   <input id = "upload" type = "submit" value = "UPLOAD POST"></a>
+	<a href="/logout/"> <input id = "logout" type = "submit" value = "Logout"></a>
+
+<div align=center>
+		
 	{% for post in posts %}
-	<h3>
-		Posted by : {{ post.user.username}}
-	</h3>
-	Image<img src="{{ post.image_url}}"
-	<span>
-	Caption: {{ post.caption }}
-	</span>
+	
+	</br>
+	</br>
+	</br>
+	</br>
+	</br>
+	
+	<h1>Posted by : {{ post.user.username}}</h1>
+	<img src="{{ post.image_url}}">
+	
+	<div id ="caption">
+		Caption: {{ post.caption }}
+		</br>
+	</div>
 
 	<form action "/like/" method="POST">
 		{% csrf_token %}
@@ -22,34 +60,28 @@
 		{% if post.has_liked %}
 		<input type="submit" value="Unlike">
 		{% else %}
-		<input type="submit" value="Like">
+		</br>
+		<input id= "Like" type="submit" value="Like">
 		{% endif %}
 	</form>
-	<div>
-		<h2> Likes : {{ post.check_likes }}</h2>
-	</div>
 	
+	<h4> Likes : {{ post.check_likes }}</h4>
 	
-</div>
-
-	<div>
-            <form method="POST" action="/comment/">
+	<form method="POST" action="/comment/">
                 {% csrf_token %}
                 <input type="hidden" name="post" value="{{ post.id }}" />
                 <input type="text" name="comment_text" id="comment_text" placeholder="Make a comment.." value="{{ comment_text }}">
                 {{ comment_text }}
                 <input type="submit" class="btn-default btn" value="Comment">
-            </form>
-    </div>
-
-		<div>
+     </form>
+	
 			{% for comment in post.comments %}
-			 <p><b>[{{ comment.user.username }}] [{{ comment.created_on }}]</b> [{{ comment.comment_text }}]</p>
+			 <p><b>{{ comment.user.username }} [{{ comment.created_on }}]</b> ({{ comment.comment_text }})</p>
 			 {% endfor %}
-		</div>
 		
 {% endfor %}
 	
-	
+</div>
+
 </body>
 </html>
