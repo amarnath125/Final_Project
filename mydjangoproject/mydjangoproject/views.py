@@ -22,7 +22,7 @@ def check_user(request):
 def comment_view(request):
     user = check_user(request)
     if user == None:
-        return redirect('/login/')
+        return redirect('/login')
     elif user and request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -30,9 +30,9 @@ def comment_view(request):
             comment_text = form.cleaned_data.get('comment_text')
             comment = CommentModel.objects.create(user=user, post_id=post_id, comment_text=comment_text)
             comment.save()
-            return redirect('/home/')
+            return redirect('/feed')
         else:
-            return redirect('/home/')
+            return redirect('/feed')
     else:
         return redirect('/login')
 
@@ -49,13 +49,13 @@ def like_view(request):
                 LikeModel.objects.create(post_id=post_id, user=user)
             else:
                 existing_like.delete()
-            return redirect('/feed/')
+            return redirect('/feed')
     else:
-        return redirect('/login/')
+        return redirect('/login')
 
 
 
-def homepage(request):
+def feed_view(request):                 #homeview
     user = check_user(request)
     if user:
         posts = PostModel.objects.all().order_by('created_on')
@@ -65,7 +65,7 @@ def homepage(request):
                 post.has_liked = True
         return render(request, 'home.html', {'posts': posts})
     else:
-        return redirect('/home/')
+        return redirect('/feed')
 
 
 
@@ -73,13 +73,13 @@ def logout_view(request):
     user_id = check_user(request)
     delete_user = SessionToken.objects.filter(user = user_id)
     delete_user.delete()
-    return redirect('/signup/')
+    return redirect('/signup')
 
 
-def feed_view(request):
+def post_view(request):
     user = check_user(request)
     if user == None:
-        return redirect('/login/')
+        return redirect('/login')
     elif request.method == 'GET':
         post_form=PostForm()
         return render(request,'feed.html',{'post_form':post_form})
@@ -94,9 +94,7 @@ def feed_view(request):
             path    = str(BASE_DIR) + '\\' + str(post.image)
             post.image_url = client.upload_from_path(path,anon=True)['link']
             post.save()                     #saving url
-            #print post.image_url
-            #print post.image
-            return redirect('/home/')
+            return redirect('/feed')
 
 
 
@@ -117,7 +115,7 @@ def login_view(request):
                     token = SessionToken(user=user)
                     token.create_token()                        #calling to create_token()
                     token.save()
-                    response = redirect('/home/')
+                    response = redirect('/feed')
                     response.set_cookie(key='session_token',value=token.session_token)
                     return response
                 else:
@@ -147,7 +145,7 @@ def signup_view(request):
             name     = signup_form.cleaned_data['name']
             email    = signup_form.cleaned_data['email']
             password = signup_form.cleaned_data['password']
-            while len(username) < 5:
+            while len(username) < 4:
                 dict['invalid_username']="Usename must be atleast 5 characters"
                 return render(request, "signup.html",dict)
             while len(password) < 5:

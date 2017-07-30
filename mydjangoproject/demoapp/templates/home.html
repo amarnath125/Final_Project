@@ -28,25 +28,30 @@
 			text-color:red;
 			font-size:20px;
 		}
+		img
+		{
+			height:500px;
+			width:500px;
+		}
 </style>
 </head>
 
 <body>
 
-	<a href="/feed/">   <input id = "upload" type = "submit" value = "UPLOAD POST"></a>
+	<a href="/post.">   <input id = "upload" type = "submit" value = "UPLOAD POST"></a>
 	<a href="/logout/"> <input id = "logout" type = "submit" value = "Logout"></a>
 
 <div align=center>
 		
 	{% for post in posts %}
 	
-	</br>
-	</br>
-	</br>
-	</br>
-	</br>
+	<br>
+	<br>
+	<br>
+	<hr>
 	
 	<h1>Posted by : {{ post.user.username}}</h1>
+	
 	<img src="{{ post.image_url}}">
 	
 	<div id ="caption">
@@ -54,7 +59,7 @@
 		</br>
 	</div>
 
-	<form action "/like/" method="POST">
+	<form action = "/like/" method="POST">
 		{% csrf_token %}
 		<input type="hidden" name="post" value="{{ post.id }}">
 		{% if post.has_liked %}
@@ -72,7 +77,7 @@
                 <input type="hidden" name="post" value="{{ post.id }}" />
                 <input type="text" name="comment_text" id="comment_text" placeholder="Make a comment.." value="{{ comment_text }}">
                 {{ comment_text }}
-                <input type="submit" class="btn-default btn" value="Comment">
+                <input type="submit" value="Comment">
      </form>
 	
 			{% for comment in post.comments %}
