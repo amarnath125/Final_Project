@@ -1,2 +1,2 @@
 # finalproject
-**Author = Danish Bhatia**
+**Author = Amar Nath**
